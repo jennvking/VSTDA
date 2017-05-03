@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html ng-app="toDoList" lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Your To Do App!</title>
+  <!-- bower:css -->
+  <!-- endbower -->
+
+  <!-- inject:css -->
+  <link rel="stylesheet" href="/app/styles/style.css">
+  <!-- endinject -->
+</head>
+
+
+<body ng-controller="ToDoController as vm">
+  <!-- Main Header -->
+  <div class="wholeBody">
+    <h1>The Very Simple To Do App</h1>
+    <form name="forminputs" id="formInputButton">
+      <!-- Text input-->
+      <div class="userInput">
+        <label id="labNewToDo">New To Do</label>
+        <br>
+        <input type="text" id="allText" placeholder="Enter task" ng-model="vm.toDo.text" required/>
+      </div>
+
+      <!-- Dropdown for Priorities -->
+      <div class="userInput">
+        <label id="labNewToDo">To Do Priority</label>
+        <br>
+        <select id="priorityInputs" name="priorityOptions" ng-model="vm.toDo.priority" required>
+          <option class="alert alert-danger" value="1">High</option>
+          <option class="alert alert-warning" value="2">Medium</option>
+          <option class="alert alert-success" value="3">Low</option>
+        </select>
+      </div>
+
+      <!-- Button -->
+      <div class="userInput">
+        <button id="createToDo" name="creToDo" ng-click="vm.addNew()" ng-disabled="forminputs.$invalid">Add</button>
+      </div>
+    </form>
+
+    <!-- Sort Option Buttons -->
+    <div class="sortOptions">
+      <!-- Button -->
+      <div class="inlineButton">
+        <button id="highPriority" class="sortButton" name="highPriority" class="highOrder" ng-click="sortfield = 'priority'">Sort by Highest Priority</button>
+      </div>
+
+      <!-- Button -->
+      <div class="inlineButton">
+        <button id="lowPriority" class="sortButton" name="lowPriority" class="lowOrder" ng-click="sortfield = '-priority'">Sort by Lowest Priority</button>
+      </div>
+
+      <!-- Button -->
+      <div class="inlineButton">
+        <button id="alphabetSort" class="sortButton" name="alphabetSort" class="alphaOrder" ng-click="sortfield = 'text'">Sort by Alphabetical Order</button>
+      </div>
+
+      <!-- Table for To Do's -->
+      <div>
+        <ul>
+          <li ng-repeat="toDo in vm.toDoArr | orderBy:sortfield" ng-bind="::vm.toDo.text" ng-class="::{'high':vm.toDo.priority == 1, 'medium':vm.toDo.priority == 2, 'low':vm.toDo.priority == 3}">
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- bower:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <!-- endbower -->
+
+  <!-- inject:js -->
+  <script src="/app/app.js"></script>
+  <!-- endinject -->
+</body>
+
+</html>
